@@ -1,0 +1,652 @@
+/* ******************************************* *
+ *    LESS CSS3 Vendor Prefix Patch Library    *
+ * ******************************************* *
+ * A collection LESS mixins for CSS3 style rules, complete with vendor prefix options for cross-browser support!
+ * 
+ * file:       css3.less
+ * author:     Christopher Leaper <c.leaper@btinternet.com>
+ * version:    1.0.1
+ * created:    28-05-2012
+ * lastmod:    17-06-2012
+ * 
+ * license:    LGPL v3.0
+ * 
+ * Copyright (c) 2012 || 2102 (ɔ) tfelypoC
+ * All Rights Reserved || desreveR sgnorW llA
+ * 
+ * ******************************************* */
+
+
+/////////////////////////////////////////////////
+// CSS3 >> Animations
+////////////////////////////////////////////////
+#animation {
+	
+	/////////////////////////////////////////////////
+	// The animation-iteration-count property defines how many times an animation should be played.
+	// 
+	// Possible values:
+	// 
+	// 		n			>> An integer number that defines how many times an animation should be played
+	// 		infinite	>> Specifies that the animation should be played infinite times (i.e. for ever)
+	// 
+	// @var			count
+	// @default		1
+	/////////////////////////////////////////////////
+	@count(@count: 1) {
+		-moz-animation-iteration-count: @count; // Firefox
+		-webkit-animation-iteration-count: @count; // Safari and Chrome
+		animation-iteration-count: @count; // W3C
+	}
+	
+	
+	/////////////////////////////////////////////////
+	// The animation-delay property defines the number of seconds or milliseconds to wait before the animation will start.
+	// 
+	// The value is defined in seconds (s) or milliseconds (ms).
+	// Tip: Negative values are allowed, -2s makes the animation start at once, but starts 2 seconds into the animation.
+	// 
+	// @var			delay (optional)
+	// @default		0
+	/////////////////////////////////////////////////
+	@delay(@delay: 0) {
+		-moz-animation-delay: @delay; // Firefox
+		-webkit-animation-delay: @delay; // Safari and Chrome
+		animation-delay: @delay; // W3C
+	}
+	
+	
+	/////////////////////////////////////////////////
+	// The animation-direction property defines whether or not the animation should play in reverse on alternate cycles.
+	// 
+	// If the animation-direction value is "alternate", the animation will be played as normal every odd time (1,3,5,etc..)
+	// and backwards every even time (2,4,6,etc...).
+	// 
+	// Note: If the animation is set to played only once, this property will have no effect.
+	// 
+	// Possible values:
+	// 
+	// 		normal		>> The animation should be played as normal (default)
+	// 		alternate	>> The animation should play in reverse on alternate cycles
+	//
+	// @var			direction
+	// @default		normal		
+	/////////////////////////////////////////////////
+	@direction(@direction: normal) {
+		-moz-animation-direction: @direction; // Firefox
+		-webkit-animation-direction: @direction; // Safari and Chrome
+		animation-direction: @direction; // W3C
+	}
+	
+	
+	/////////////////////////////////////////////////
+	// The animation-duration property defines how many seconds or milliseconds an animation takes to complete one cycle.
+	//
+	// Note: The default value is 0 meaning there will be no animation!
+	// 
+	// @var			duration
+	// @default		0
+	/////////////////////////////////////////////////
+	@duration(@duration: 0) {
+		-moz-animation-duration: @duration; // Firefox
+		-webkit-animation-duration: @duration; // Safari and Chrome
+		animation-duration: @duration; // W3C
+	}
+	
+	
+	/////////////////////////////////////////////////
+	// With the @keyframes rule, you can create animations.
+	// 
+	// The animation is created by gradually changing from one set of CSS styles to another.
+	// During the animation, you can change the set of CSS styles many times.
+	// Specify when the change will happen in percent, or the keywords "from" and "to", which is the same as 0% and 100%.
+	// 0% is the beginning of the animation, 100% is when the animation is complete.
+	// For best browser support, you should always define both the 0% and the 100% selectors.
+	// 
+	// Note: Use the animation properties to control the appearance of the animation, and also to bind the animation to selectors.
+	/////////////////////////////////////////////////
+	#keyframes {
+		
+		@moz(@name, @percent, @property, @value) {
+			@-moz-keyframes @name {
+				@percent { @property: @value; }
+			}
+		}
+		
+		@ms(@name, @percent, @property, @value) {
+			@-ms-keyframes @name {
+				@percent { @property: @value; }
+			}
+		}
+		
+		@o(@name, @percent, @property, @value) {
+			@-o-keyframes @name {
+				@percent { @property: @value; }
+			}
+		}
+		
+		@webkit(@name, @percent, @property, @value) {
+			@-webkit-keyframes @name {
+				@percent { @property: @value; }
+			}
+		}
+		
+		@w3c(@name, @percent, @property, @value) {
+			@keyframes @name {
+				@percent { @property: @value; }
+			}
+		}
+		
+		@all {
+			@webkit; // I don't know why but convention is to put webkit's rules first ?!
+			@moz;
+			@ms;
+			@o;
+			@w3c;
+		}
+		
+	}
+	
+	
+	/////////////////////////////////////////////////
+	// The animation-name property specifies a name for the @keyframes animation.
+	// 
+	// Possible values:
+	// 
+	// 		keyframename	>> Specifies the name of the keyframe you want to bind to the selector
+	// 		none			>> Specifies that there will be no animation (can be used to override animations coming from the cascade)
+	// 
+	// @var			name
+	// @default		none
+	/////////////////////////////////////////////////
+	@name(@animation-name) {
+		-moz-animation-name: @animation-name; // Firefox
+		-webkit-animation-name: @animation-name; // Safari and Chrome
+		animation-name: @animation-name; // W3C
+	}
+	
+	
+	/////////////////////////////////////////////////
+	// The animation-play-state property specifies whether the animation is running or paused.
+	// 
+	// Note: Use this property in a JavaScript to pause an animation in the middle of a cycle.
+	// 
+	// Possible values:
+	// 
+	// 		paused		>> Specifies that the animation is paused
+	// 		running		>> Specifies that the animation is running (default)
+	// 
+	// @var			state
+	// @default		running
+	/////////////////////////////////////////////////
+	@state(@animation-state: running) {
+		-moz-animation-play-state: @animation-state; // Firefox
+		-webkit-animation-play-state: @animation-state; // Safari and Chrome
+		animation-play-state: @animation-state; // W3C
+	}
+	
+	
+	/////////////////////////////////////////////////
+	// The animation-timing-function specifies the speed curve of the animation.
+	//
+	// The speed curve defines the TIME an animation uses to change from one set of CSS styles to another.
+	// The speed curve is used to make the changes smoothly.
+	// 
+	// A mathematical function called the Cubic Bèzier curve is used to make the speed curve.
+	// You can use your own values in this function, or use one of the pre-defined values:
+	// 
+	// 		linear					>> The animation has the same speed from start to end
+	// 		ease					>> The animation has a slow start, then fast, before it ends slowly (default)
+	// 		ease-in					>> The animation has a slow start
+	// 		ease-out				>> The animation has a slow end
+	// 		ease-in-out				>> The animation has both a slow start and a slow end
+	// 		cubic-bezier(n,n,n,n)	>> Define your own values in the cubic-bezier function (numeric values in the range 0 to 1)
+	// 
+	// @var			timing
+	// @default		ease
+	/////////////////////////////////////////////////
+	@timing(@animation-timing: ease) {
+		-moz-animation-timing-function: @animation-timing; /* Firefox */
+		-webkit-animation-timing-function: @animation-timing; /* Safari and Chrome */
+		animation-timing-function: @animation-timing; // W3C
+	}
+	
+}
+
+
+
+
+/////////////////////////////////////////////////
+// CSS3 >> Columns
+/////////////////////////////////////////////////
+#column {
+	
+	// Specifies the number of columns an element should be divided into
+	@count(@column-count) {
+		-moz-column-count: @column-count; // Firefox
+		-webkit-column-count: @column-count; // Safari and Chrome
+		column-count: @column-count; // W3C, Opera
+	}
+	
+	
+/////////////////////////////////////////////////
+// No Major Browsers Support This Property Yet !!
+//	// Specifies how to fill columns
+//	@fill(@method: auto) {
+//		column-fill: @method; // options are:  auto | balance
+//	}
+/////////////////////////////////////////////////
+	
+	
+	// Specifies the gap between the columns
+	@gap(@column-gap: 1em) {
+		-moz-column-gap: @column-gap; // Firefox
+		-webkit-column-gap: @column-gap; // Safari and Chrome
+		column-gap: @column-gap; // W3C, Opera
+	}
+	
+	
+	// A shorthand property for setting all the column-rule-* properties
+	@rule(@color, @style, @width) {
+		-moz-column-rule: @arguments; // Firefox
+		-webkit-column-rule: @arguments; // Safari and Chrome
+		column-rule: @arguments; // W3C, Opera
+	}
+	
+	
+	// 'column-rule' namespace:
+	// >> Specify the color/style/width of the rule between columns
+	#rule {
+		
+		@color(@column-rule-color) {
+			-moz-column-rule-color: @column-rule-color; // Firefox
+			-webkit-column-rule-color: @column-rule-color; // Safari and Chrome
+			column-rule-color: @column-rule-color; // W3C, Opera
+		}
+		
+		@style(@column-rule-style) {
+			-moz-column-rule-style: @column-rule-style; // Firefox
+			-webkit-column-rule-style: @column-rule-style; // Safari and Chrome
+			column-rule-style: @column-rule-style; // W3C, Opera
+		}
+		
+		@width(@column-rule-width) {
+			-moz-column-rule-width: @column-rule-width; // Firefox
+			-webkit-column-rule-width: @column-rule-width; // Safari and Chrome
+			column-rule-width: @column-rule-width; // W3C, Opera
+		}
+		
+	}
+	
+	
+	// [Quick Ref] Specifies the color of the rule between columns
+	@rule-color(@column-rule-color) {
+		#rule > @color(@column-rule-color);
+	}
+	
+	// [Quick Ref] Specifies the style of the rule between columns
+	@rule-style(@column-rule-style) {
+		#rule > @style(@column-rule-style);
+	}
+	
+	// [Quick Ref] Specifies the width of the rule between columns
+	@rule-width(@column-rule-width) {
+		#rule > @width(@column-rule-width);
+	}
+	
+	
+	// Specifies how many columns an element should span across
+	@span(@column-span) {
+		-webkit-column-span: @column-span; // Chrome
+		column-span: @column-span; // W3C, Opera
+	}
+	
+	
+	// Specifies the width of the columns
+	@width(@column-width) {
+		-moz-column-width: @column-width; // Firefox
+		-webkit-column-width: @column-width; // Safari and Chrome
+		column-width: @column-width; // W3C, Opera
+	}
+	
+	
+	// A shorthand property for setting column-width and column-count
+	@columns(@column-width: auto, @column-count: 2) {
+		-webkit-columns: @arguments; // Safari and Chrome
+		-moz-columns: @arguments; // Firefox
+		columns: @arguments; // W3C, Opera
+	}
+	
+	// Offset a columns position (+/-)
+	@offset(@column-width, @factor: 1) {
+		left: @column-width * @factor;
+		position: relative;
+	}
+	
+	// Pad the area of a column
+	@pad(@pad, @pad-top: 0, @pad-bottom: 0) {
+		padding: @pad-top (@pad * @column-width) @pad-bottom;
+	}
+	
+}
+
+
+
+
+/////////////////////////////////////////////////
+// CSS3 >> @font-face rules
+/////////////////////////////////////////////////
+#font-face {
+	
+	@family(@name) {
+		font-family: @name;
+	}
+	
+	/**
+	 * Supported Font Formats:
+	 * 
+	 * 		eot			>> IE6 - IE8
+	 * 		woff		>> FF3.6+, IE9, Chrome6+, Saf5.1+
+	 * 		truetype	>> Saf3—5, Chrome4+, FF3.5, Opera 10+
+	 *  
+	 * Note: IE6 to IE8 requires a slight hack (e.g. '?#') at the end of the URL string! (to give 'url.eot?#')
+	 */
+	@src(@url, @format) {
+		src: url(@url) format(@format);
+	}
+	
+}
+/*
+// Shorthand reference for cross-browser formats
+@font-face(@font-family, @url) {
+	#font-face > @family(@font-family);
+	#font-face > @src('@{url}.eot?#', 'eot'),
+		#font-face > @src('@{url}.woff', 'woff'),
+		#font-face > @src('@{url}.ttf', 'truetype');
+}
+*/
+
+
+
+
+/////////////////////////////////////////////////
+// Mozilla FireFox (FF) [Gecko Browser Engine]
+/////////////////////////////////////////////////
+#-moz- {
+	
+	@animation(@name, @duration: 0, @timing: ease, @delay: 0, @count: 1, @direction: normal) {
+		-moz-animation: @arguments; // FF5+
+	}
+	
+	@background-clip(@method: border-box) {
+		-moz-background-clip: @method; // Firefox 1.0-3.6
+	}
+	
+	@columns(@count: 2, @gap: 1em, @rule) {
+		-moz-column-count: @count; // FF3.5+
+		-moz-column-gap: @gap;
+		-moz-column-rule: @rule;
+	}
+	
+	@linear-gradient(@pos: top, @from: #000, @to: #fff) {
+		background-image: -moz-linear-gradient(@pos, @from, @to); // FF3.6+
+	}
+	
+	// Note: Mozilla's implementation requires that the last 2 values are in pixels (px)
+	@matrix(@a, @c, @b, @d, @tx, @ty) {
+		-moz-transform: matrix(@a, @c, @b, @d, '@{tx}px', '@{ty}px');
+	}
+	
+	@rotate(@degrees: 1deg) {
+		-moz-transform: rotate(@degrees); // FF3.5+
+	}
+	
+	@scale(@size: 1) {
+		-moz-transform: scale(@size); // FF3.5+
+	}
+	
+	@sizing(@method: content-box) {
+		-moz-box-sizing: @method; /* FF1+ */
+	}
+	
+	@transition(@property, @duration: 0, @timing: linear, @delay: 0) {
+		-moz-transition: @arguments; // FF4+
+	}
+	
+}
+
+
+
+
+///////////////////////////////////////////////////////////////
+// Microsoft Internet Explorer (IE) [Trident Browser Engine]
+///////////////////////////////////////////////////////////////
+#-ms- {
+	
+	@animation(@name, @duration: 0, @timing: ease, @delay: 0, @count: 1, @direction: normal) {
+		-ms-animation: @arguments; // IE10
+	}
+	
+	@linear-gradient(@pos: top, @from: #000, @to: #fff) {
+		background-image: -ms-linear-gradient(@pos, @from, @to); // IE10
+	}
+	
+	@matrix(@a, @c, @b, @d, @tx, @ty) {
+		-ms-transform: matrix(@arguments);
+	}
+	
+	@rotate(@degrees: 1deg) {
+		-ms-transform: rotate(@degrees); // IE9
+	}
+	
+	@scale(@size: 1) {
+		-ms-transform: scale(@size); // IE9
+	}
+	
+	@transition(@property, @duration: 0, @timing: linear, @delay: 0) {
+		-ms-transition: @arguments; // IE10
+	}
+	
+}
+
+///////////////
+// IE6 to IE8
+//////////////
+#lt-ie9 {
+	
+	@has-layout { zoom: 1; }
+	@has-layout-hack { *zoom: 1; }
+	
+	@inline-block {
+		display: inline;
+		@has-layout;
+	}
+	
+	@linear-gradient(@from: #000, @to: #fff) {
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@from, endColorstr=@to );
+		-ms-filter: e("progid:DXImageTransform.Microsoft.gradient( startColorstr=@{from}, endColorstr=@{to} )");
+	}
+	
+	@transform(@m11, @m12, @m21, @m22, @method: 'auto expand') {
+		filter: progid:DXImageTransform.Microsoft.Matrix(
+			M11=@m11,
+			M12=@m12,
+			M21=@m21,
+			M22=@m22,
+			SizingMethod=@method
+		);
+		@has-layout;
+	}
+	
+	/////////////////////////////////////////////////
+	/* Note: Legacy IE's implentation of opacity (via `filter: alpha()`) requires a percentage value rather than a decimal! */
+	// LESS has a built in function to convert decimals to percentages (e.g. 'percent(0.5)' would give a value of 50!)
+	/////////////////////////////////////////////////
+	@opacity(@percent) {
+		filter: alpha(opacity=@percent); 
+	}
+	
+}
+
+
+
+
+/////////////////////////////////////////////////
+// Opera (O) [Presto Broswer Engine]
+/////////////////////////////////////////////////
+#-o- {
+	
+	@animation(@name, @duration: 0, @timing: ease, @delay: 0, @count: 1, @direction: normal) {
+		-o-animation: @arguments; // Opera 12+
+	}
+	
+	@background-clip(@method: border-box) {
+		background-clip: @method; // W3C, Firefox 4.0+, Opera
+	}
+	
+	@linear-gradient(@pos: top, @from: #000, @to: #fff) {
+		background-image: -o-linear-gradient(@pos, @from, @to); // Opera 11.10+
+	}
+	
+	@matrix(@a, @c, @b, @d, @tx, @ty) {
+		-o-transform: matrix(@arguments);
+	}
+	
+	@rotate(@degrees: 1deg) {
+		-o-transform: rotate(@degrees); // Opera 10.5
+	}
+	
+	@scale(@size: 1) {
+		-o-transform: scale(@size); // Opera 10.5+
+	}
+	
+	@transition(@property, @duration: 0, @timing: linear, @delay: 0) {
+		-o-transition: @arguments; // Opera 10.5+
+	}
+	
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////////////
+// Safari (Saf), Google Chrome, Chromium, iOS [Webkit Browser Engine]
+/////////////////////////////////////////////////////////////////////////
+#-webkit- {
+	
+	@animation(@name, @duration: 0, @timing: ease, @delay: 0, @count: 1, @direction: normal) {
+		-webkit-animation: @arguments; // Saf5, Chrome
+	}
+	
+	@background-clip(@method: border-box) {
+		-webkit-background-clip: @method; // Safari, Chrome
+	}
+	
+	@background-size(@x: 100%, @y: 100%) {
+		-webkit-background-size: @arguments; // Saf3-4
+	}
+	
+	@box-shadow (@x: 0, @y: 0, @blur: 2px, @spread: 2px, @color: #000) {
+		-webkit-box-shadow: @arguments; // Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+
+	}
+	
+	@columns(@count: 2, @gap: 1em, @rule) {
+		-webkit-column-count: @count; // Saf3, Chrome
+		-webkit-column-gap: @gap;
+		-webkit-column-rule: @rule;
+	}
+	
+	@gradient(@type: linear, @startpos-x: left, @startpos-y: top, @endpos-x: left, @endpos-y: bottom, @from, @to) {
+		background-image: -webkit-gradient(@type, @startpos-x @startpos-y, @endpos-x @endpos-y, from(@from), to(@to)); // Saf4+, Chrome
+		// TODO :: figure out how to add color stops!!
+	}
+	
+	@linear-gradient(@pos: top, @from: #000, @to: #fff) {
+		background-image: -webkit-linear-gradient(top, #444444, #999999); // Chrome 10+, Saf5.1+, iOS 5+
+	}
+	
+	@matrix(@a, @c, @b, @d, @tx, @ty) {
+		-webkit-transform: matrix(@arguments);
+	}
+	
+	@rotate(@degrees: 1deg) {
+		-webkit-transform: rotate(@degrees); // Saf3.1+, Chrome
+	}
+	
+	@scale(@size: 1) {
+		-webkit-transform: scale(@size); // Saf3.1+, Chrome
+	}
+	
+	@sizing(@method: content-box) {
+		-webkit-box-sizing: @method; // <=iOS4, <= Android  2.3
+	}
+	
+	@transition(@property, @duration: 0, @timing: linear, @delay: 0) {
+		-webkit-transition: @arguments; // Saf3.2+, Chrome
+	}
+	
+}
+
+
+
+
+/////////////////////////////////////////////////
+// W3C Standards Compliant
+/////////////////////////////////////////////////
+#w3c {
+	
+	@background-clip(@method: border-box) {
+		background-clip: @method; // W3C, Firefox 4.0+, Opera
+	}
+	
+	@background-size(@x: 100%, @y: 100%) {
+		background-size: @arguments; // Opera, IE9, Saf5, Chrome, FF4+
+	}
+	
+	@border-radius (@radius: 4px) {
+		border-radius: @radius;
+	}
+	
+	@box-shadow (@x: 0, @y: 0, @blur: 2px, @spread: 2px, @color: #000) {
+		box-shadow: @arguments; // Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5
+	}
+	
+	@columns(@count: 2, @gap: 1em, @rule) {
+		column-count: @count; // Opera 11+
+		column-gap: @gap;
+		column-rule: @rule;
+	}
+	
+	@linear-gradient(@opposite: bottom, @from: #000, @to: #fff) {
+		background-image: linear-gradient(to @opposite, @from, @to);
+	}
+	
+	@matrix(@a, @c, @b, @d, @tx, @ty) {
+		transform: matrix(@arguments);
+	}
+	
+	@rotate(@degrees: 1deg) {
+		transform: rotate(@degrees);
+	}
+	
+	@scale(@size: 1) {
+		transform: scale(@size);
+	}
+	
+	@transition(@property, @duration: 0, @timing: linear, @delay: 0) {
+		transition: @arguments;
+	}
+	
+	@text-shadow(@x: 0, @y: 0, @spread: 1px, @color) {
+	     text-shadow: @arguments; // FF3.5+, Opera 9+, Saf1+, Chrome, IE10
+	}
+	
+	@opacity(@alpha: 0) {
+		opacity: @alpha; // Chrome 4+, FF2+, Saf3.1+, Opera 9+, IE9, iOS 3.2+, Android 2.1+
+	}
+	
+	@sizing(@method: content-box) {
+		box-sizing: @method; // Chrome, IE8, Opera, Safari 5.1
+	}
+	
+}

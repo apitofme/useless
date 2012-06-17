@@ -1,0 +1,118 @@
+/* ***************************** *
+ *    Flexible Grid with LESS    *
+ * ***************************** *
+ * LESS mixins to help create 'invisible', dynamic grid based layouts
+ * ( i.e. no need for externally visible class names ! )
+ *
+ * file:       grid.less
+ * author:     Christopher Leaper <c.leaper@btinternet.com>
+ * version:    1.0.1
+ * created:    28-05-2012
+ * lastmod:    17-06-2012
+ * 
+ * uses:      css3.less
+ * 
+ * license:    LGPL v3.0
+ * 
+ * Copyright (c) 2012 || 2102 (ɔ) tfelypoC
+ * All Rights Reserved || desreveR sgnorW llA
+ * 
+ * ***************************** */
+
+/*
+:: Notes ::
+-- !! Important !!
+ - '@content-width' MUST be defined in the LESS source code before this file is included!
+
+-- This code was based on / developed from a tutorial on Nettuts+
+ - http://net.tutsplus.com/tutorials/php/how-to-squeeze-the-most-out-of-less/
+*/
+
+@column-count: 24;
+@column-width: @content-width / @column-count;
+@column-gap: 1em;
+@display: inline-block;
+@float: left;
+
+@grid(@count: @column-count, @gap: @column-gap, @margin-top: 0, @margin-bottom: 0) {
+	border: @border + 0; // Allow for local declaration of border
+	padding: @padding + 0; // Allow for local declaration of padding
+	@width: (@column-width * @count) - ((@gap * 2) + @padding + @border); // local  calculation only!
+	display: @display;
+	float: @float;
+	margin: @margin-top @gap @margin-bottom;
+	width: e('@{width}px');
+	
+	// Don't forget to fix 'inline-block' for older IE with:
+	// e.g. ".lt-ie8 { #lt-ie9 > @inline-block; }"  >> (ref: CSS3.less)
+}
+
+// Shift a column on the grid by a number of columns (+/-)
+@shift(@offset, @col-width: @column-width) {
+	left: @offset * @col-width;
+	position: relative;
+}
+
+// Shift a column on the grid by a number of columns (+/-)
+@row-shift(@offset, @col-width: @column-width) {
+	margin-left: @offset * @col-width;
+}
+
+// Pad a column on the grid by a number of columns (+)
+@pad(@pad, @pad-top: 0, @pad-bottom: 0, @col-width: @column-width) {
+	padding: @pad-top (@pad * @col-width) @pad-bottom;
+}
+
+// force a new row on the grid
+@new-row { clear: left; }
+
+// Semantic Mini-Clearfix
+@group {
+	
+	&::before,
+	&::after { content: ""; display: table;	}
+	
+	&::after { clear: both;	}
+	
+	// Fix 'has-layout' property for older IE (ref: CSS3.less)
+	.lt-ie8 & { #lt-ie9 > @has-layout; }
+	
+}
+.group { @group; } // set as a class
+
+
+#custom {
+	
+	@grid(@span, @count: @column-count, @gap: @column-gap, @width: @content-width, @margin-top: 0, @margin-bottom: 0) {
+		border: @border + 0; // Allow for local declaration of border
+		padding: @padding + 0; // Allow for local declaration of padding
+		@width: ((@width / @count) * @span) - ((@gap * 2) + @padding + @border); // local calculation only!
+		display: @display;
+		float: @float;
+		margin: @margin-top @gap @margin-bottom;
+		width: e('@{width}px');
+		
+		// Don't forget to fix 'inline-block' for older IE with:
+		// e.g. ".lt-ie8 { #lt-ie9 > @inline-block; }"  >> (ref: CSS3.less)
+	}
+	
+	// Shift a column on the grid by a number of columns (+/-)
+	@shift(@offset, @columns: @column-count, @width: @content-width) {
+		@amount: (@width / @columns) * @offset;
+		left: e('@{amount}px');
+		position: relative;
+	}
+	
+	// Shift a column on the grid by a number of columns (+/-)
+	@row-shift(@offset, @columns: @column-count, @width: @content-width) {
+		@amount: (@width / @columns) * @offset;
+		margin-left: e('@{amount}px');
+	}
+	
+	// Pad a column on the grid by a number of columns (+)
+	@pad(@gap, @columns: @column-count, @width: @content-width, @pad-top: 0, @pad-bottom: 0) {
+		@amount: (@width / @columns) * @gap;
+		padding: @pad-top e('@{amount}px') @pad-bottom;
+	}
+	
+}

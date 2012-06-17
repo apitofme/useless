@@ -1,0 +1,171 @@
+/* ************************ *
+ *    LESS CSS Utilities    *
+ * ************************ *
+ * A useful set of pre-defined LESS rules to perform common tasks.
+ * 
+ * file:       util.less
+ * author:     Christopher Leaper <c.leaper@btinternet.com>
+ * version:    1.0.1
+ * created:    06-06-2012
+ * lastmod:    17-06-2012
+ * 
+ * license:    LGPL v3.0
+ * 
+ * Copyright (c) 2012 || 2102 (ɔ) tfelypoC
+ * All Rights Reserved || desreveR sgnorW llA
+ * 
+ * ************************ */
+
+/*
+:: Notes ::
+-- !! Additional recommended resources !!
+ -- Rafael Lima's "CSS Browser Selector"
+  - https://github.com/rafaelp/css_browser_selector
+
+ -- Modernizr: JavaScript powered web browser feature detection library
+  - http://modernizr.com/
+*/
+
+
+
+// How about a mixed-in sticky footer? ( See 'Sticky-Footer' section in readme for specific usage info [tbc] )
+@sticky-footer( @footer-height, @page: #page, @main: #main, @footer: #page-footer) {
+	
+	html, body {
+		height: 100%;
+	}
+	
+	@page {
+		min-height: 100%;
+	}
+	
+	@main {
+		overflow: auto;
+		padding-bottom: @footer-height;
+	}
+	
+	/* Don't forget to set the footer element's top position/margin to (minus) the @footer-height! */
+	@footer { // This element must be the page's footer (HTML5 supports a 'footer' element per 'section'!)
+		clear: both;
+		height: @footer-height;
+		margin-top: -@footer-height; /* negative value of footer height */
+		position: relative;
+	}
+	
+	// Opera Fix [assumes `CSS_Browser_Selector.js`]
+	.opera body::before { /* thanks to Maleika (Kohoutec) */
+		content: "";
+		float: left;
+		height: 100%;
+		margin-top:-32767px; /* negate effect of float (thank you Erik J) */
+		width: 0;
+	}
+	
+	// IE Fix (less than & greater than IE7) [assumes `Modernizr.js` / HTML5-BP]
+	.lt-ie7 @page,
+	.ie8 @page {
+		display: table;
+		height: 100%;
+	}
+	
+}
+
+
+// :: Layout Styles ::
+@block {
+	display: block;
+}
+@inline-block {
+	display: inline-block;
+}
+@centered {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+// :: Layout Styles :: IE Specific Over-rides ::
+@ie-inline-block {
+	display: inline;
+	*zoom: 1;
+}
+.lt-ie8 { // assumes 'modernizer.js' or HTML5-BP
+	@inline-block {
+		display: inline;
+		zoom: 1;
+	}
+}
+
+
+// :: Visual Styles ::
+@hidden {
+	visibility: hidden;
+}
+@revealed {
+	visibility: visible;
+}
+@removed {
+	display: none;
+}
+@restored {
+	display: initial;
+}
+
+
+// :: Positional Styles ::
+@float( @position: left ) {
+// TODO [update] limit choices to left / right ?
+	float: @position;
+}
+@relative {
+	position: relative;
+}
+@absolute {
+	position: absolute;
+}
+
+
+// :: Colourific Styles ::
+/* !! You'll probably want to set your own variables here !! */
+// I've only included these here as possible examples
+#colors {
+	@base: #222;
+	@text: #444;
+	@link: #4ad;
+	@link-dark: darken( @link, 20% );
+	@link-light: lighten( @link, 20% );
+}
+
+
+// :: Typographical Styles ::
+@bold {
+	font-weight: bold;
+}
+@italic {
+	font-style: italic;
+}
+@small( @size: 90% ) {
+	font-size: @size;
+}
+@whisper { // intended to soften a piece of text
+	color: lighten( #colors[@text], 15%);
+}
+@shout { // for shouty people
+	text-transform: uppercase;
+}
+@center { // not to be confused with '@centered'
+/* [poll] change name to '@txt-center' ? YES : NO */
+	text-align: center;
+}
+@justify: {
+	text-align: justify;
+}
+@align-right {
+/* [poll] change name to '@txt-align-right' || '@txt-aright' ? YES : NO */
+	text-align: right;
+}
+@img-align-right(@left: 1em, @bottom: 1em,  @right: 0, @top: 0 ) {
+/* [poll] change args order to comply with css standards ( i.e. clockwise > top-right-left-bottom ) */
+	float: right;
+	margin: @arguments;
+}
+
